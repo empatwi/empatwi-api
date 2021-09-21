@@ -1,6 +1,7 @@
 from api import bp, api
 from flask_cors import CORS, cross_origin
 from flask import Flask
+from api_routes import search_ns
 
 config = {
     'ORIGINS': [
@@ -19,6 +20,8 @@ app.config['RESTPLUS_VALIDATE'] = True
 app.config['SWAGGER_UI_DOC_EXPANSION'] = 'list'
 
 cross_origin(automatic_options=True)
+
+api.add_namespace(search_ns)
 
 @app.after_request
 def after_request(response):
