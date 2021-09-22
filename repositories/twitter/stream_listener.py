@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from tweepy.streaming import StreamListener
 from ..csv_writer_repository import CsvWriterRepository
 
@@ -15,7 +16,8 @@ class StreamListener(StreamListener):
         self.keyword = keyword
 
     today = datetime.datetime.today()
-    initial_date = today.strftime('%Y-%m-%d %H:%M:%S')
+    today_string = today.strftime('%Y-%m-%d')
+    today = datetime.datetime.strptime(today_string, '%Y-%m-%d')
     today_subtracted = today - datetime.timedelta(days=3)
     final_date = today_subtracted.strftime('%Y-%m-%d %H:%M:%S')    
 
@@ -34,6 +36,17 @@ class StreamListener(StreamListener):
         to avoid tweets with URLs and media such as videos, GIFs and
         images.
         """
+        #IST = pytz.timezone('Brazil/East')
+        #created_at_string = status.created_at.strftime('%Y-%m-%d')
+        #created_at_only_day = datetime.datetime.strptime(created_at_string, '%Y-%m-%d')
+        #created_at_only_day = datetime.timezone()
+
+        #print(f'status:::: {created_at_only_day}')
+        #print(f'self:::::: {self.today}')
+
+        #if created_at_only_day == self.today:
+        #    print(created_at_only_day)
+
         if status.entities["urls"] == []:
             if hasattr(status, "retweeted_status"):
                 try:
@@ -61,6 +74,8 @@ class StreamListener(StreamListener):
                     created_at, tweet_content, self.keyword, user_location, entities
                 )
 
+            print(f'tweet created at {status.created_at}')
+            
     def on_error(self, status_code):
         if status_code == 420:
             return False

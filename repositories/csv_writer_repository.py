@@ -20,11 +20,9 @@ csvwriter.writerow([
 
 class CsvWriterRepository():
     
-    def set_keyword(self, keyword):
-        return keyword
-
     def write_tweets_raw_csv(self, created_at, tweet_content, keyword, user_location, entities):
-         
+        """ Writes the csv file that contains raw data from twitter stream output
+        """         
         csvwriter.writerow(
             [
                 created_at,

@@ -1,4 +1,3 @@
-import csv
 import werkzeug
 
 from werkzeug.utils import cached_property
