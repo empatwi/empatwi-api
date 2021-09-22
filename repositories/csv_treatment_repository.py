@@ -3,10 +3,12 @@ import pandas as pd
 from .csv_writer_repository import csv_filename
 
 class CsvTreatmentRepository():
-
+    
     def remove_raw_stream_duplicates(self):
-        print(os.path.join(csv_filename))
         df = pd.read_csv(os.path.join(csv_filename))
-        print(df.head())
+        print(f'Shape before removing duplicates: {df.shape}')
 
-        #pandas.errors.EmptyDataError
+        df_dropped = df.drop_duplicates(subset='tweet_content', keep='first', inplace=False)
+        print(f'Shape before removing duplicates: {df_dropped.shape}')
+
+        return df_dropped

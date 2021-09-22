@@ -14,5 +14,5 @@ class TweetAcquisitionRepository():
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, stream_listener)
         stream.filter(track=[keyword], languages=["pt"], is_async=True)
-        time.sleep(30)
+        time.sleep(10)
         stream.disconnect()

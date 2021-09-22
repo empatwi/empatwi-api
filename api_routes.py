@@ -1,4 +1,5 @@
 import werkzeug
+import time
 
 from werkzeug.utils import cached_property
 werkzeug.cached_property = cached_property
@@ -27,5 +28,6 @@ class Search(Resource):
         payload = request.get_json()
         keyword = payload['keyword']
         tweet_acquisition_repository.stream_tweets(keyword)
+        time.sleep(0.5)
         CsvTreatmentRepository().remove_raw_stream_duplicates()
         return 200
