@@ -7,6 +7,7 @@ from api import api
 from flask_restplus import Resource, fields, Namespace
 from flask import request
 from repositories.twitter.tweet_acquisition_repository import TweetAcquisitionRepository
+from repositories.csv_treatment_repository import CsvTreatmentRepository
 
 search_ns = Namespace('search', description='Tweet search related operations')
 search_fields = api.model('Search', {'keyword': fields.String(required=True)})
@@ -26,4 +27,5 @@ class Search(Resource):
         payload = request.get_json()
         keyword = payload['keyword']
         tweet_acquisition_repository.stream_tweets(keyword)
+        CsvTreatmentRepository().remove_raw_stream_duplicates()
         return 200

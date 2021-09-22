@@ -1,28 +1,32 @@
 import sys
 sys.path.append("..")
+
 import csv
 import datetime
 import os
-#from api_routes import keyword
 
 today = datetime.datetime.today()
 today_str = today.strftime('%Y%m%d%H%M%S')
-
-csvfile = open(os.path.join(f'files/raw_stream_output_{today_str}.csv'), 'a', encoding='utf-8')
-csvwriter = csv.writer(csvfile)
-csvwriter.writerow([
-    'created_at',
-    'tweet_content',
-    'keyword',
-    'user_location',
-    'entities'
-])
+csv_filename = f'files/raw_stream_output_{today_str}.csv'
 
 class CsvWriterRepository():
-    
-    def write_tweets_raw_csv(self, created_at, tweet_content, keyword, user_location, entities):
+
+    def create_csv_file(self):
+        csvfile = open(os.path.join(csv_filename), 'a', encoding='utf-8')
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow([
+            'created_at',
+            'tweet_content',
+            'keyword',
+            'user_location',
+            'entities'
+        ])
+
+        return csvwriter
+
+    def write_tweets_raw_csv(self, csvwriter, created_at, tweet_content, keyword, user_location, entities):
         """ Writes the csv file that contains raw data from twitter stream output
-        """         
+        """       
         csvwriter.writerow(
             [
                 created_at,
