@@ -9,6 +9,7 @@ from flask_restplus import Resource, fields, Namespace
 from flask import request
 from repositories.twitter.tweet_acquisition_repository import TweetAcquisitionRepository
 from repositories.csv_treatment_repository import CsvTreatmentRepository
+from repositories.learning.preprocessing_repository import PreprocessingRepository
 
 search_ns = Namespace('search', description='Tweet search related operations')
 search_fields = api.model('Search', {'keyword': fields.String(required=True)})
@@ -29,5 +30,7 @@ class Search(Resource):
         keyword = payload['keyword']
         tweet_acquisition_repository.stream_tweets(keyword)
         time.sleep(0.5)
-        CsvTreatmentRepository().remove_raw_stream_duplicates()
+        # TODO: Subir o df remove duplicates no banco do crowdsourcing
+        df = CsvTreatmentRepository().remove_raw_stream_duplicates()
+        clean_df = PreprocessingRepository().apply_preprocessing(df)
         return 200
