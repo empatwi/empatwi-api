@@ -7,14 +7,11 @@ werkzeug.cached_property = cached_property
 from api import api
 from flask_restplus import Resource, fields, Namespace
 from flask import request
-from repositories.twitter.tweet_acquisition_repository import TweetAcquisitionRepository
-from repositories.csv_treatment_repository import CsvTreatmentRepository
-from repositories.learning.preprocessing_repository import PreprocessingRepository
+from pandas import errors
+from parsers.search_result_parser import SearchResultParser
 
 search_ns = Namespace('search', description='Tweet search related operations')
 search_fields = api.model('Search', {'keyword': fields.String(required=True)})
-
-tweet_acquisition_repository = TweetAcquisitionRepository()
 
 @search_ns.route('/')
 @search_ns.expect(search_fields, validate=True)
@@ -28,9 +25,9 @@ class Search(Resource):
     def post(self):
         payload = request.get_json()
         keyword = payload['keyword']
-        tweet_acquisition_repository.stream_tweets(keyword)
-        time.sleep(0.5)
-        # TODO: Subir o df remove duplicates no banco do crowdsourcing
-        df = CsvTreatmentRepository().remove_raw_stream_duplicates()
-        clean_df = PreprocessingRepository().apply_preprocessing(df)
-        return 200
+        try:
+            return SearchResultParser().search_result_parser(keyword), 200
+        except errors.EmptyDataError:
+            return 404
+        except:
+            return 500
