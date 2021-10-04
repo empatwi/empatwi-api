@@ -14,5 +14,5 @@ class SearchService():
         # TODO: Subir o df remove duplicates no banco do crowdsourcing
         df = CsvTreatmentRepository().remove_raw_stream_duplicates()
         clean_df = PreprocessingRepository().apply_preprocessing(df)
-        positive, negative = ModelApplicationRepository().model_application(clean_df)
-        return positive, negative
+        positive, negative, positives_explained, negatives_explained = ModelApplicationRepository().model_application(clean_df)
+        return positive, negative, positives_explained, negatives_explained

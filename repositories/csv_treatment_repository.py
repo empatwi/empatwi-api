@@ -4,7 +4,6 @@ from .csv_writer_repository import csv_filename
 
 class CsvTreatmentRepository():
 
-    #TODO: Retornar erro quando o dataframe estiver vazio
     def remove_raw_stream_duplicates(self):
         if os.path.isfile(csv_filename):
             df = pd.read_csv(os.path.join(csv_filename))
