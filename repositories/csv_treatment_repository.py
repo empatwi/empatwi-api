@@ -12,4 +12,6 @@ class CsvTreatmentRepository():
             df_dropped = df.drop_duplicates(subset='tweet_content', keep='first', inplace=False)
             print(f'Shape after removing duplicates: {df_dropped.shape}')
 
+            os.remove(os.path.join(csv_filename))
+
             return df_dropped

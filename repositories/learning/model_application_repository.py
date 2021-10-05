@@ -1,5 +1,4 @@
 import os
-import lime
 import numpy as np
 from joblib import load
 from lime.lime_text import LimeTextExplainer
