@@ -40,7 +40,7 @@ class ModelApplicationRepository():
                     'relevance': round(word[1], 4)
                 }
                 negatives_explained.append(negatives_dict)
-            else:
+            elif word[1] > 0:
                 positives_dict = {
                     'word': word[0],
                     'relevance': round(word[1], 4)

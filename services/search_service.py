@@ -12,7 +12,6 @@ class SearchService():
     def search(self, keyword):
         tweet_acquisition_repository.stream_tweets(keyword)
         time.sleep(1.5)
-        # TODO: Subir o df remove duplicates no banco do crowdsourcing
         df = CsvTreatmentRepository().remove_raw_stream_duplicates()
         MongoDbRepository().mongo_import(df)
         clean_df = PreprocessingRepository().apply_preprocessing(df)
