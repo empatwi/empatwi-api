@@ -26,7 +26,9 @@ class CsvWriterRepository():
 
     def write_tweets_raw_csv(self, csvwriter, created_at, tweet_content, keyword, user_location, entities):
         """ Writes the csv file that contains raw data from twitter stream output
-        """       
+        """
+        csvfile = open(os.path.join(csv_filename), 'a', encoding='utf-8')
+
         csvwriter.writerow(
             [
                 created_at,
@@ -37,3 +39,4 @@ class CsvWriterRepository():
             ]
         )
 
+        csvfile.close()
