@@ -31,3 +31,17 @@ class Search(Resource):
             return 404
         except:
             return 500
+
+@search_ns.route('/trending-topics')
+class SearchTrendingTopics(Resource):
+    @search_ns.doc(responses={
+        200: 'OK',
+        400: 'BAD REQUEST',
+        500: 'INTERNAL SERVER ERROR'
+    })
+    @search_ns.doc(description='Searches for current trending topics')
+    def get(self):
+        try:
+            return SearchResultParser().trending_topics_parser(23424768), 200
+        except:
+            return 500

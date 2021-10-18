@@ -17,3 +17,6 @@ class SearchService():
         clean_df = PreprocessingRepository().apply_preprocessing(df)
         positive, negative, positives_explained, negatives_explained = ModelApplicationRepository().model_application(clean_df)
         return positive, negative, positives_explained, negatives_explained
+
+    def trending_topics(self, woeid):
+        return tweet_acquisition_repository.get_trending_topics(woeid)
