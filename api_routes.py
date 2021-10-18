@@ -29,8 +29,8 @@ class Search(Resource):
             return SearchResultParser().search_result_parser(keyword), 200
         except errors.EmptyDataError:
             return 404
-        except:
-            return 500
+        #except:
+        #    return 500
 
 @search_ns.route('/trending-topics')
 class SearchTrendingTopics(Resource):

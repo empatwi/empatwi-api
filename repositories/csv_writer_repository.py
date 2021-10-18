@@ -9,10 +9,13 @@ today = datetime.datetime.today()
 today_str = today.strftime('%Y%m%d%H%M%S')
 csv_filename = f'files/raw_stream_output_{today_str}.csv'
 
+FILE_DIR = os.path.dirname(os.path.abspath(csv_filename))
+PARENT_DIR = os.path.join(FILE_DIR, os.pardir)
+
 class CsvWriterRepository():
 
     def create_csv_file(self):
-        csvfile = open(os.path.join(csv_filename), 'a', encoding='utf-8')
+        csvfile = open(os.path.join(PARENT_DIR, csv_filename), 'a', encoding='utf-8')
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow([
             'created_at',
