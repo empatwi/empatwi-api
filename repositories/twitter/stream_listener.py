@@ -1,5 +1,3 @@
-import datetime
-import pytz
 from tweepy.streaming import StreamListener
 from ..csv_writer_repository import CsvWriterRepository
 
