@@ -8,15 +8,14 @@ from tweepy import OAuthHandler, Stream
 
 class TweetAcquisitionRepository():
 
-    async def stream_tweets(self, keyword):
+    def stream_tweets(self, keyword):
         """ Streams tweets for 10 seconds
         """
         stream_listener = StreamListener(keyword)
         auth = OAuthHandler(API_KEY, API_KEY_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, stream_listener)
-        await stream.filter(track=[keyword], languages=["pt"], is_async=True)
-        #asyncio.sleep(25)
+        stream.filter(track=[keyword], languages=["pt"], is_async=True)
         time.sleep(25)
         stream.disconnect()
 

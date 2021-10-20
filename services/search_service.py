@@ -1,5 +1,6 @@
 import asyncio
 import time
+import os
 from repositories.twitter.tweet_acquisition_repository import TweetAcquisitionRepository
 from repositories.csv_treatment_repository import CsvTreatmentRepository
 from repositories.learning.preprocessing_repository import PreprocessingRepository
@@ -11,8 +12,8 @@ tweet_acquisition_repository = TweetAcquisitionRepository()
 class SearchService():
 
     def search(self, keyword):
-        asyncio.run(tweet_acquisition_repository.stream_tweets(keyword))
-        #time.sleep(1.5)
+        tweet_acquisition_repository.stream_tweets(keyword)
+        time.sleep(5)
         df = CsvTreatmentRepository().remove_raw_stream_duplicates()
         MongoDbRepository().mongo_import(df)
         clean_df = PreprocessingRepository().apply_preprocessing(df)

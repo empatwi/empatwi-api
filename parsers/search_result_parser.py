@@ -1,3 +1,4 @@
+import asyncio
 from services.search_service import SearchService
 
 class SearchResultParser():

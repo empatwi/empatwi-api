@@ -15,7 +15,7 @@ PARENT_DIR = os.path.join(FILE_DIR, os.pardir)
 class CsvWriterRepository():
 
     def create_csv_file(self):
-        csvfile = open(os.path.join(PARENT_DIR, csv_filename), 'a', encoding='utf-8')
+        csvfile = open(os.path.abspath(csv_filename), 'a', encoding='utf-8')
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow([
             'created_at',
