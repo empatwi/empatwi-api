@@ -26,7 +26,7 @@ api.add_namespace(search_ns)
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Methods', 'PUT')
+    response.headers.add('Access-Control-Allow-Methods', 'POST')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     return response
 
