@@ -1,9 +1,5 @@
-import datetime
-import pytz
 from tweepy.streaming import StreamListener
-from ..csv_writer_repository import CsvWriterRepository
-
-csv_writer_repository = CsvWriterRepository()
+from ..mongo_db_repository import MongoDbRepository
 
 class StreamListener(StreamListener):
     """
@@ -14,7 +10,6 @@ class StreamListener(StreamListener):
     def __init__(self, keyword):
         super(StreamListener, self).__init__()
         self.keyword = keyword
-        self.csvwriter = csv_writer_repository.create_csv_file()
 
     def on_status(self, status):
         """
@@ -54,11 +49,8 @@ class StreamListener(StreamListener):
           
             if not ("https://" or "http://") in tweet_content:
                 print(tweet_content)
-                csv_writer_repository.write_tweets_raw_csv(
-                    self.csvwriter, created_at, tweet_content, self.keyword, user_location, entities
-                )
+                MongoDbRepository().search_result_mongo_import(created_at, tweet_content, self.keyword, user_location, entities)
             
     def on_error(self, status_code):
         if status_code == 420:
             return False
-

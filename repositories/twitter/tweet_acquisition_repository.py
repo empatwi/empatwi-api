@@ -1,5 +1,4 @@
 import time
-
 import tweepy
 
 from .twitter_settings import API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
@@ -16,7 +15,7 @@ class TweetAcquisitionRepository():
         auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         stream = Stream(auth, stream_listener)
         stream.filter(track=[keyword], languages=["pt"], is_async=True)
-        time.sleep(25)
+        time.sleep(15)
         stream.disconnect()
 
     def get_trending_topics(self, woeid):
