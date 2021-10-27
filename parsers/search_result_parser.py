@@ -21,5 +21,5 @@ class SearchResultParser():
                     'name': item['name'],
                     'tweet_volume': item['tweet_volume']
                 }
-            clear_trends.append(trends_dict)
+                clear_trends.append(trends_dict)
         return clear_trends
