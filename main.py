@@ -1,11 +1,11 @@
 from api import bp, api
 from flask_cors import CORS, cross_origin
-from flask import Flask
+from flask import Flask, request
 from api_routes import search_ns
 
 config = {
     'ORIGINS': [
-        'http://localhost:3000'
+        'http://localhost:3000/'
     ]
 }
 
@@ -31,4 +31,4 @@ def after_request(response):
     return response
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

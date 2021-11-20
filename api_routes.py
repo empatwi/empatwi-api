@@ -1,5 +1,5 @@
+from flask_cors.decorator import cross_origin
 import werkzeug
-import time
 
 from werkzeug.utils import cached_property
 werkzeug.cached_property = cached_property
