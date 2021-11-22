@@ -1,4 +1,3 @@
-from flask_cors.decorator import cross_origin
 import werkzeug
 
 from werkzeug.utils import cached_property
@@ -18,7 +17,7 @@ search_fields = api.model('Search', {'keyword': fields.String(required=True)})
 class Search(Resource):
     @search_ns.doc(responses={
         200: 'OK',
-        400: 'BAD REQUEST',
+        404: 'NO RESULT FOUND',
         500: 'INTERNAL SERVER ERROR'
     })
     @search_ns.doc(description='Searches for keyword on Twitter through stream listener')
@@ -28,9 +27,9 @@ class Search(Resource):
         try:
             return SearchResultParser().search_result_parser(keyword), 200
         except errors.EmptyDataError:
-            return 404
+            return 'NO RESULT FOUND', 404
         except:
-            return 500
+            return 'INTERNAL SERVER ERROR', 500
 
 @search_ns.route('/trending-topics')
 class SearchTrendingTopics(Resource):
@@ -44,4 +43,4 @@ class SearchTrendingTopics(Resource):
         try:
             return SearchResultParser().trending_topics_parser(23424768), 200
         except:
-            return 500
+            return 'INTERNAL SERVER ERROR', 500
