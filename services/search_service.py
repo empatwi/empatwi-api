@@ -11,7 +11,6 @@ class SearchService():
 
     def search(self, keyword):
         tweet_acquisition_repository.stream_tweets(keyword)
-        time.sleep(5)
         try:
             df = MongoDbRepository().read_mongo_into_dataframe(keyword)
             MongoDbRepository().crowdsourcing_mongo_import(df)
